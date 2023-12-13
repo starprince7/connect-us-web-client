@@ -16,7 +16,7 @@ const initialState: IState = {
   requestStatus: 'idle',
 }
 
-// Async action template.
+// Async redux action template.
 export const templateAction = createAsyncThunk(`${name}/templateAction`, async () => {
   const result = (await fetch('')) as any
   return result.data
