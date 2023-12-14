@@ -1,6 +1,6 @@
 import React from 'react'
 
-const PrivateLayout = () => {
+const PrivateLayout = (): JSX.Element => {
   return <div>PrivateLayout</div>
 }
 

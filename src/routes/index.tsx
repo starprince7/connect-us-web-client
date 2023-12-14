@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import PrivateLayout from '../components/PrivateLayout'
 import Welcome from '../pages/welcome'
 
-export const RootRouter = () => {
+export const RootRouter = (): React.ReactNode => {
   // const dispatch = useDispatch();
   // const { isLoggedIn } = useSelector(authSelector);
   const isLoggedIn = true
