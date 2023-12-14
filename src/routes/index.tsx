@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import PrivateLayout from '../components/PrivateLayout'
 import Welcome from '../pages/welcome'
+import { TeamsPage } from '../pages/dashboard/teams'
 
 export const RootRouter = () => {
   // const dispatch = useDispatch();
@@ -13,8 +14,8 @@ export const RootRouter = () => {
       <Route path='/login' />
       <Route path='/signUp' />
       {!!isLoggedIn && (
-        <Route element={<PrivateLayout />}>
-          <Route path='/Teams' />
+        <Route path='/dashboard' element={<PrivateLayout />}>
+          <Route path='/Teams' element={<TeamsPage />} />
           <Route path='/messaging' />
           <Route path='/watch' />
         </Route>
