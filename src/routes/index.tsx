@@ -15,7 +15,7 @@ export const RootRouter = () => {
       <Route path='/signUp' />
       {!!isLoggedIn && (
         <Route path='/dashboard' element={<PrivateLayout />}>
-          <Route path='/Teams' element={<TeamsPage />} />
+          <Route path='/teams' element={<TeamsPage />} />
           <Route path='/messaging' />
           <Route path='/watch' />
         </Route>
