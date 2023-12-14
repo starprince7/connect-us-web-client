@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-import PrivateLayout from '../components/PrivateLayout'
+import DashboardLayout from '../components/DashboardLayout'
 import Welcome from '../pages/welcome'
 import { TeamsPage } from '../pages/dashboard/teams'
 
@@ -14,7 +14,7 @@ export const RootRouter = () => {
       <Route path='/login' />
       <Route path='/signUp' />
       {!!isLoggedIn && (
-        <Route path='/dashboard' element={<PrivateLayout />}>
+        <Route element={<DashboardLayout />}>
           <Route path='/teams' element={<TeamsPage />} />
           <Route path='/messaging' />
           <Route path='/watch' />
