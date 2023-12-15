@@ -9,12 +9,10 @@ export const TeamsPage = () => {
     <div className='space-y-12'>
       <h2 className='text-4xl font-bold'>Teams</h2>
       {/* it renders <Other's teams /> component */}
-      {/* it renders direct message list */}
-      <div className='sm:flex items-center sm:space-x-2'>
-        <div className=' max-w-fit'>
-          {/* Ite renders other teams component */}
-          <DirectMessageList />
-        </div>
+      <div className='sm:flex items-start sm:space-x-2 h-screen'>
+        {/* it renders direct message list */}
+        {/* Ite renders other teams component */}
+        <DirectMessageList />
         <ChatBox />
         <ProfileSideBar />
       </div>
@@ -25,7 +23,7 @@ export const TeamsPage = () => {
 function DirectMessageList() {
   return (
     <div className='space-y-4 mt-5 max-w-fit'>
-      <h2 className='text-sm font-semibold'>Direct Messages</h2>
+      <h2 className='text-sm font-semibold mb-10'>Direct Messages</h2>
       {Array(5)
         .fill('')
         .map((_, i) => (

@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom'
 import DashboardLayout from '../components/DashboardLayout'
 import Welcome from '../pages/welcome'
-import { TeamsPage } from '../pages/dashboard/teams'
-import { NewsPage } from '../pages/dashboard/news'
+import { TeamsPage } from '../pages/dashboard/teamsPage'
+import { NewsPage } from '../pages/dashboard/newsPage'
 
 export const RootRouter = () => {
   // const dispatch = useDispatch();
