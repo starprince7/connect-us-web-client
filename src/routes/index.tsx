@@ -1,7 +1,8 @@
 import { Route, Routes } from 'react-router-dom'
 import DashboardLayout from '../components/DashboardLayout'
 import Welcome from '../pages/welcome'
-import { TeamsPage } from '../pages/dashboard/teams'
+import { TeamsPage } from '../pages/dashboard/teamsPage'
+import { NewsPage } from '../pages/dashboard/newsPage'
 
 export const RootRouter = () => {
   // const dispatch = useDispatch();
@@ -16,7 +17,7 @@ export const RootRouter = () => {
       {!!isLoggedIn && (
         <Route element={<DashboardLayout />}>
           <Route path='/teams' element={<TeamsPage />} />
-          <Route path='/messaging' />
+          <Route path='/news' element={<NewsPage />} />
           <Route path='/watch' />
         </Route>
       )}
