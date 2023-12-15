@@ -16,7 +16,6 @@ export const RootRouter = () => {
       <Route path='/*' element={<Welcome />} />
       <Route path='/login' element={<Login />} />
       <Route path='/sign-up' element={<SignUp />} />
-      <Route path='/connect' element={<ConnectUs />} />
       {!!isLoggedIn && (
         <Route element={<DashboardLayout />}>
           <Route path='/teams' element={<TeamsPage />} />
