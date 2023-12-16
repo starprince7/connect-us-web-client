@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 interface DropdownProps {
  label:string;
  options :any;
  value: string;
+ required:boolean;
  onChange:React.ChangeEventHandler<HTMLSelectElement> ;
 }
-const DropdownInput = ({ label, options, value, onChange }: DropdownProps) => {
+const DropdownInput = ({ label,required, options, value, onChange }: DropdownProps) => {
   return (
     <div className="mb-4">
       <label htmlFor="dropdown" className="block my-3">
@@ -16,10 +17,11 @@ const DropdownInput = ({ label, options, value, onChange }: DropdownProps) => {
         id="dropdown"
         name="dropdown"
         value={value}
+        required={required}
         onChange={onChange}
         className="w-full p-2 mt-1 border rounded-md outline-none bg-white"
       >
-        <option value="" disabled></option>
+        <option value="" disabled className='text-sm text-gray-100'>Select an option</option>
         {options.map((option:any) => (
           <option key={option.value} value={option.value}>
             {option.label}
