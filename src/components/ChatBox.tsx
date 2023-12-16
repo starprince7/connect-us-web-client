@@ -1,8 +1,9 @@
 import React from 'react'
+import { ChatContext } from '../pages/dashboard/teamsPage'
 
 export const ChatBox = () => {
   return (
-    <div className='border min-h-[85%] flex-1 col-span-2 rounded-2xl relative bg-gray-100 px-2'>
+    <div className='border min-h-[85%] w-full col-span-2 rounded-2xl relative bg-gray-100 px-2 transition-all ease-in duration-1000'>
       <ChatBoxHeader />
       <ChatBoxInput />
     </div>
@@ -10,12 +11,16 @@ export const ChatBox = () => {
 }
 
 function ChatBoxHeader() {
+  const { setShowUserChatInfo } = React.useContext(ChatContext)
   return (
     <div className='rounded-lg border p-2 absolute top-0 left-0 w-full px-3.5 z-20 bg-white'>
-      <div className='items-center space-y-1'>
-        <h1 className='font-bold'>Guy Hawkins</h1>
-        <div className='text-sm text-gray-500'>Active</div>
-      </div>
+      <button
+        className='items-center space-y-1 flex flex-col justify-start'
+        onClick={() => setShowUserChatInfo(true)}
+      >
+        <h1 className='font-bold hover:underline underline-offset-2'>Guy Hawkins</h1>
+        <div className='text-sm text-gray-500 -ml-14'>Active</div>
+      </button>
     </div>
   )
 }

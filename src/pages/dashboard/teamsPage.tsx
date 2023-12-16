@@ -4,7 +4,13 @@ import AvatarChatWoman from '../../assets/icons/chat-woman-avatar.svg'
 import { ChatBox } from '../../components/ChatBox'
 import { ProfileSideBar } from '../../components/ProfileSideBar'
 
+interface IChatContext {
+  setShowUserChatInfo: React.Dispatch<React.SetStateAction<boolean>>
+}
+export const ChatContext = React.createContext({} as IChatContext)
+
 export const TeamsPage = () => {
+  const [showUserChatInfo, setShowUserChatInfo] = React.useState(false)
   return (
     <div className='space-y-12'>
       <h2 className='text-4xl font-bold'>Teams</h2>
@@ -13,8 +19,13 @@ export const TeamsPage = () => {
         {/* it renders direct message list */}
         {/* Ite renders other teams component */}
         <DirectMessageList />
-        <ChatBox />
-        <ProfileSideBar />
+        <ChatContext.Provider value={{ setShowUserChatInfo }}>
+          <ChatBox />
+        </ChatContext.Provider>
+        <ProfileSideBar
+          isActive={showUserChatInfo}
+          closeProfileBar={() => setShowUserChatInfo(false)}
+        />
       </div>
     </div>
   )
