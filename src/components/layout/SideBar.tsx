@@ -1,8 +1,8 @@
 import React from 'react'
-import TeamIcon from '../assets/icons/teams-icon.svg'
-import NewsIcon from '../assets/icons/news-icon.svg'
-import LogoutIcon from '../assets/icons/logout-icon.svg'
-import LogoDashboard from '../assets/icons/logo-dashboard.svg'
+import TeamIcon from '../../assets/icons/teams-icon.svg'
+import NewsIcon from '../../assets/icons/news-icon.svg'
+import LogoutIcon from '../../assets/icons/logout-icon.svg'
+import LogoDashboard from '../../assets/icons/logo-dashboard.svg'
 import { Link, useLocation } from 'react-router-dom'
 
 export const SideBar = () => {
@@ -10,7 +10,7 @@ export const SideBar = () => {
   const currentRoute = location.pathname
 
   return (
-    <div className='border w-60 space-y-8 px-5 py-5 min-h-screen'>
+    <div className='border hidden md:block overflow-hidden sm:w-60 space-y-8 px-5 py-5 min-h-screen'>
       <h3>
         <img src={LogoDashboard} alt='logo' className='h-14' />
       </h3>

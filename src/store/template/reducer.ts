@@ -3,14 +3,14 @@
  */
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-interface IState {
+interface ITemplateStore {
   error: string
   payload: any
   requestStatus: 'idle' | 'loading' | 'succeeded' | 'failed'
 }
 
 const name = 'template'
-const initialState: IState = {
+const initialState: ITemplateStore = {
   error: '',
   payload: null,
   requestStatus: 'idle',
@@ -45,4 +45,5 @@ const templateSlice = createSlice({
 })
 
 export const { moreTemplateAction } = templateSlice.actions
+export const select_template = (store: any) => store.Template as ITemplateStore
 export default templateSlice.reducer

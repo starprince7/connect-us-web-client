@@ -13,10 +13,10 @@ export const ProfileSideBar = ({ isActive, closeProfileBar }: Props) => {
   return (
     <div
       className={`min-h-[85%] ${
-        isActive ? 'w-1/3 opacity-100' : 'w-0 opacity-0'
-      } rounded-2xl bg-gray-100 grid place-content-center relative transition-all ease-in-out duration-200`}
+        isActive ? 'w-full sm:w-1/3 opacity-100' : 'w-0 opacity-0'
+      } rounded-2xl bg-gray-100 grid place-content-center absolute top-0 left-0 z-30 sm:relative transition-all ease-in-out duration-100`}
     >
-      <button className='border absolute top-5 right-4' onClick={closeProfileBar}>
+      <button className='absolute top-5 right-4' onClick={closeProfileBar}>
         <CloseIcon style={{ width: 30, height: 30 }} />
       </button>
       <div className='text-center'>
