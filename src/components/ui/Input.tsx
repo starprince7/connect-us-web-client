@@ -7,10 +7,12 @@ interface InputProps {
     required: boolean;
     type: string;
     value: string;
+    autoFocus?: boolean;
+    placeholder:string;
     onChange: React.ChangeEventHandler<HTMLInputElement>;
 
 }
-const Input = ({ id, name, required , type,  value, label, onChange}: InputProps) => {
+const Input = ({ id, name, required , type ,autoFocus, placeholder, value, label, onChange}: InputProps) => {
     return (
         <div>
             <label htmlFor= {id} className='block my-3'>{label}</label>
@@ -20,7 +22,9 @@ const Input = ({ id, name, required , type,  value, label, onChange}: InputProps
               type={type}
               required={required}
               value={value}
+              autoFocus={autoFocus}
               onChange={onChange}
+              placeholder={placeholder}
               className='w-full p-2 rounded outline-none'
             />
         </div>
