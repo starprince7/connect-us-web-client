@@ -53,41 +53,49 @@
 
 // export default PasswordInput;
 
-import React, { useState, ChangeEvent } from 'react';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import React, { useState, ChangeEvent } from 'react'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
 interface PasswordInputProps {
-  label: string;
-  id: string;
-  name: string;
-  required: boolean;
-  value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  label: string
+  id: string
+  name: string
+  required: boolean
+  value: string
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  className?: string
 }
 
-const PasswordInput: React.FC<PasswordInputProps> = ({ label, id, name, required, value, onChange }) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [passwordError, setPasswordError] = useState('');
+const PasswordInput: React.FC<PasswordInputProps> = ({
+  label,
+  id,
+  name,
+  required,
+  value,
+  onChange,
+}) => {
+  const [showPassword, setShowPassword] = useState(false)
+  const [passwordError, setPasswordError] = useState('')
 
   const togglePassword = () => {
-    setShowPassword(!showPassword);
-  };
+    setShowPassword(!showPassword)
+  }
 
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newPassword = e.target.value;
+    const newPassword = e.target.value
 
     // Check password length
     if (newPassword.length < 5) {
-      setPasswordError('Password must be at least five characters long.');
+      setPasswordError('Password must be at least five characters long.')
     } else {
-      setPasswordError('');
+      setPasswordError('')
     }
 
-    onChange(e);
-  };
+    onChange(e)
+  }
 
   return (
-    <div className='relative'>
+    <div className='relative w-full'>
       <label htmlFor={id} className='block my-3'>
         {label}
       </label>
@@ -98,14 +106,14 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ label, id, name, required
         required={required}
         value={value}
         onChange={handlePasswordChange}
-        className='w-full p-2 rounded outline-none'
+        className='w-full p-2 rounded outline-none border'
       />
       <span className='absolute top-12 md:top-[3.7rem] right-1' onClick={togglePassword}>
-        {showPassword ? <FaEyeSlash /> : <FaEye />}
+        {showPassword ? <FaEye /> : <FaEyeSlash />}
       </span>
-      {passwordError && <p className='text-red-500 text-sm'>{passwordError}</p>}
+      {passwordError && <p className='text-red-500 text-xs mt-1'>{passwordError}</p>}
     </div>
-  );
-};
+  )
+}
 
-export default PasswordInput;
+export default PasswordInput

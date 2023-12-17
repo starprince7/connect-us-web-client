@@ -21,6 +21,7 @@ export const SideBar = () => {
           const isActiveRoute = '/' + name === currentRoute
           return (
             <Link
+              key={name}
               to={name}
               className={`${
                 isActiveRoute ? 'bg-gray-200 shadow-lg' : 'bg-gray-50'
