@@ -5,7 +5,7 @@ interface IChatStore {
   payload: any
   requestStatus: 'idle' | 'loading' | 'succeeded' | 'failed'
   isChatBoxOpen: boolean
-  openChatConversation: {}[]
+  activeChatConversation: {}[]
 }
 
 const name = 'chat'
@@ -14,7 +14,7 @@ const initialState: IChatStore = {
   payload: null,
   requestStatus: 'idle',
   isChatBoxOpen: false,
-  openChatConversation: [],
+  activeChatConversation: [],
 }
 
 // Async redux action chat.
@@ -35,7 +35,7 @@ const chatSlice = createSlice({
       state.isChatBoxOpen = false
     },
     setActiveConversation: (state, action) => {
-      state.openChatConversation = action.payload
+      state.activeChatConversation = action.payload
     },
   },
   extraReducers: (builder) => {
