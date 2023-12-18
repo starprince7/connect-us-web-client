@@ -3,7 +3,7 @@ import { ChatContext } from '../pages/dashboard/teamsPage'
 import { HiXCircle as CloseIcon } from 'react-icons/hi'
 import { useSelector, useDispatch } from 'react-redux'
 import { closeChat, fetchConversationStoreAction, selectChat } from '../store/chat/reducer'
-import collaborateIllustration from '../assets/illustrations/collaborate-illustration.svg'
+import collaborateIllustration from '../assets/illustrations/real_time_collaboration.svg'
 import { selectAuth } from '../store/auth/reducer'
 import toastService from '../lib/toast-alert'
 import apiClient from '../config/api-client'
@@ -38,17 +38,18 @@ export const ChatBox = () => {
     <div
       className={`absolute top-0 left-0 ${
         isChatBoxOpen ? 'w-full opacity-100' : 'w-0 opacity-0'
-      } h-screen z-20 sm:static transition-all ease-in-out duration-100`}
+      }  z-20 sm:static transition-all ease-in-out duration-100`}
     >
-      <div className='border overflow-y-scroll pb-24 min-h-full sm:min-h-[85%] w-full col-span-2 rounded-2xl relative bg-gray-100 px-5 flex flex-col justify-end space-y-5'>
+      <div className='pb-16 pt-11 h-1/2 w-full col-span-2 rounded-2xl relative bg-gray-100 px-5 flex flex-col justify-end'>
         <ChatBoxHeader />
         {/* it renders chat messages inside of chat box */}
-        {chatConversation &&
-          chatConversation.map((message) => {
-            if (message.author === _id) return <RightTextBlock textContent={message.content} />
-            else return <LeftTextBlock textContent={message.content} />
-          })}
-
+        <div className='h-[650px] mt-6 py-10 overflow-y-scroll overflow-x-hidden space-y-3'>
+          {chatConversation &&
+            chatConversation.map((message) => {
+              if (message.author === _id) return <RightTextBlock textContent={message.content} />
+              else return <LeftTextBlock textContent={message.content} />
+            })}
+        </div>
         <ChatBoxInput />
       </div>
     </div>
@@ -58,8 +59,8 @@ export const ChatBox = () => {
 // Chat Text block
 function RightTextBlock({ textContent }: { textContent: string }) {
   return (
-    <div className='relative p-3 rounded min-w-[100px] max-w-[65%] sm:max-w-[50%] ml-auto bg-neutral-900 text-white'>
-      <span className='absolute -right-2 rounded-sm top-5 w-10 h-8 rotate-45 bg-neutral-900'></span>
+    <div className='relative p-3 rounded-md w-fit max-w-[65%] sm:max-w-[50%] ml-auto bg-neutral-900 text-white mr-5'>
+      <span className='absolute -right-2 rounded-sm top-3 w-10 h-8 rotate-45 bg-neutral-900'></span>
       <p className='w-[92%] py-2 px-1 whitespace-nowrap pr-12'>{textContent}</p>
     </div>
   )
@@ -68,9 +69,9 @@ function RightTextBlock({ textContent }: { textContent: string }) {
 // Chat Text block
 function LeftTextBlock({ textContent }: { textContent: string }) {
   return (
-    <div className='relative p-3 rounded min-w-[100px] max-w-[65%] sm:max-w-[50%] bg-gray-300'>
-      <span className='absolute -left-2 rounded-sm top-5 w-10 h-8 rotate-45 bg-gray-300'></span>
-      <p className='w-[92%] ml-auto py-2 px-1'>{textContent}</p>
+    <div className='relative p-3 rounded-md w-fit  max-w-[65%] sm:max-w-[50%] bg-gray-300 ml-5'>
+      <span className='absolute -left-2 rounded-sm top-3 w-10 h-8 rotate-45 bg-gray-300'></span>
+      <p className='w-[92%] ml-auto py-2 whitespace-nowrap px-3'>{textContent}</p>
     </div>
   )
 }
@@ -80,7 +81,7 @@ function ChatBoxHeader() {
   const { setShowUserChatInfo, setShowChatBox } = React.useContext(ChatContext)
   const { chatRecipientInformation } = useSelector(selectChat)
   return (
-    <div className='rounded-lg border p-2 absolute top-0 left-0 w-full px-3.5 z-20 bg-white flex justify-between items-center'>
+    <div className='rounded-lg shadow-lg border p-2 absolute top-0 left-0 w-full px-3.5 z-20 bg-white flex justify-between items-center'>
       <button
         className='space-y-1 flex flex-col items-start justify-start'
         onClick={() => setShowUserChatInfo(true)}
@@ -129,7 +130,7 @@ function ChatBoxInput() {
     }
   }
   return (
-    <div className=' absolute bottom-2 left-0 w-full px-3 z-20'>
+    <div className='drop-shadow-xl absolute bottom-2 left-0 w-full px-3 z-20'>
       <form
         onSubmit={handleChatMessageSubmit}
         className='rounded-lg flex items-center border space-x-2 p-1.5 bg-white'
