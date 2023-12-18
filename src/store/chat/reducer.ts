@@ -1,27 +1,48 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { IMessage } from '../../types/message'
+import apiClient from '../../config/api-client'
 
 interface IChatStore {
   error: string
-  payload: any
   requestStatus: 'idle' | 'loading' | 'succeeded' | 'failed'
   isChatBoxOpen: boolean
-  activeChatConversation: {}[]
+  activeChatConversation: IMessage[]
+  page: number
+  pages: number
+  chatRecipientInformation: {
+    fullname: string
+    email: string
+    onLeave: boolean
+    _id: string
+  }
 }
+
+type FetchConversationParam = { page: number; _id: string }
 
 const name = 'chat'
 const initialState: IChatStore = {
   error: '',
-  payload: null,
   requestStatus: 'idle',
   isChatBoxOpen: false,
   activeChatConversation: [],
+  page: 0,
+  pages: 0,
+  chatRecipientInformation: {
+    fullname: '',
+    email: '',
+    onLeave: false,
+    _id: '',
+  },
 }
 
 // Async redux action chat.
-export const chatAction = createAsyncThunk(`${name}/chatAction`, async () => {
-  const result = (await fetch('')) as any
-  return result.data
-})
+export const fetchConversationStoreAction = createAsyncThunk<any, FetchConversationParam>(
+  `${name}/fetchConversationStoreAction`,
+  async ({ page, _id }) => {
+    const { data } = await apiClient.get(`/chat/${_id}?page=${page}`)
+    return data
+  },
+)
 
 // Create slice.
 const chatSlice = createSlice({
@@ -35,24 +56,34 @@ const chatSlice = createSlice({
       state.isChatBoxOpen = false
     },
     setActiveConversation: (state, action) => {
-      state.activeChatConversation = action.payload
+      state.activeChatConversation = action.payload.messageConversations
+      state.page = action.payload.page
+    },
+    setChatRecipientInformation: (
+      state,
+      action: PayloadAction<IChatStore['chatRecipientInformation']>,
+    ) => {
+      state.chatRecipientInformation = action.payload
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(chatAction.pending, (state) => {
+    builder.addCase(fetchConversationStoreAction.pending, (state) => {
       state.requestStatus = 'loading'
     })
-    builder.addCase(chatAction.rejected, (state, action) => {
+    builder.addCase(fetchConversationStoreAction.rejected, (state, action) => {
       state.error = action.error.message as string
       state.requestStatus = 'failed'
     })
-    builder.addCase(chatAction.fulfilled, (state, action) => {
-      state.payload = action.payload
+    builder.addCase(fetchConversationStoreAction.fulfilled, (state, action) => {
+      state.activeChatConversation = action.payload?.data
+      state.page = action.payload?.page
+      state.pages = action.payload?.pages
       state.requestStatus = 'succeeded'
     })
   },
 })
 
-export const { openChat, closeChat, setActiveConversation } = chatSlice.actions
+export const { openChat, closeChat, setActiveConversation, setChatRecipientInformation } =
+  chatSlice.actions
 export default chatSlice.reducer
 export const selectChat = (store: any) => store.Chat as IChatStore

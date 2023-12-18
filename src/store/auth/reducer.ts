@@ -1,12 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { redirect } from 'react-router-dom'
 import { IUser, LoginDto, UserDto } from '../../types/auth'
 import toastService from '../../lib/toast-alert'
 import apiClient from '../../config/api-client'
 import { getFromUrl } from '../../lib/getUrlParam'
+import { StorageService } from '../../lib/storage'
 
 interface IAuthStore {
   error: string
-  user: IUser | null
+  user: IUser
   isLoggedIn: boolean
   requestStatus: 'idle' | 'loading' | 'succeeded' | 'failed'
 }
@@ -14,7 +16,15 @@ interface IAuthStore {
 const name = 'auth'
 const initialState: IAuthStore = {
   error: '',
-  user: null,
+  user: {
+    _id: '',
+    authority: 0,
+    email: '',
+    fullname: '',
+    gender: '',
+    leave: false,
+    verified: false,
+  },
   isLoggedIn: false,
   requestStatus: 'idle',
 }
@@ -49,7 +59,22 @@ const AuthSlice = createSlice({
   name,
   initialState,
   reducers: {
-    moreAuthAction: (state) => {},
+    logoutAction: (state) => {
+      state.requestStatus = 'idle'
+      state.user = {
+        _id: '',
+        authority: 0,
+        email: '',
+        fullname: '',
+        gender: '',
+        leave: false,
+        verified: false,
+      }
+      state.error = ''
+      state.isLoggedIn = false
+      StorageService.removeAuthToken()
+      redirect('/login')
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(registerUser.pending, (state) => {
@@ -89,10 +114,11 @@ const AuthSlice = createSlice({
       state.requestStatus = 'succeeded'
       state.isLoggedIn = true
       toastService.showSuccessMessage(action.payload.message)
+      StorageService.setAuthToken(action.payload.token)
     })
   },
 })
 
-export const { moreAuthAction } = AuthSlice.actions
+export const { logoutAction } = AuthSlice.actions
 export const selectAuth = (store: any) => store.Auth as IAuthStore
 export default AuthSlice.reducer
