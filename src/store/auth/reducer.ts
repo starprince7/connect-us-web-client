@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { redirect } from 'react-router-dom'
 import { IUser, LoginDto, UserDto } from '../../types/auth'
 import toastService from '../../lib/toast-alert'
 import apiClient from '../../config/api-client'
@@ -73,7 +72,7 @@ const AuthSlice = createSlice({
       state.error = ''
       state.isLoggedIn = false
       StorageService.removeAuthToken()
-      redirect('/login')
+      window.location.assign('/login')
     },
   },
   extraReducers: (builder) => {

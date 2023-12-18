@@ -13,9 +13,9 @@ export const RootRouter = () => {
 
   return (
     <Routes>
-      <Route path='/*' element={<Welcome />} />
       <Route path='/login' element={<Login />} />
       <Route path='/sign-up' element={<SignUp />} />
+      <Route path='/*' element={<Welcome />} />
       {!!isLoggedIn && (
         <Route element={<DashboardLayout />}>
           <Route path='/teams' element={<TeamsPage />} />
