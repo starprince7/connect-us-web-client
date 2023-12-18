@@ -19,7 +19,6 @@ export const TeamsPage = () => {
       <h2 className='text-4xl font-bold'>Teams</h2>
       {/* it renders <Other's teams /> component */}
       <div className='sm:flex items-start sm:space-x-4 h-screen'>
-        {/* it renders direct message list */}
         <DirectMessageList />
         <ChatContext.Provider value={{ setShowUserChatInfo, showChatBox, setShowChatBox }}>
           <ChatBox />

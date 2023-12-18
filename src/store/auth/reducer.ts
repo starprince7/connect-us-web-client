@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { redirect } from 'react-router-dom'
 import { IUser, LoginDto, UserDto } from '../../types/auth'
 import toastService from '../../lib/toast-alert'
 import apiClient from '../../config/api-client'
@@ -73,7 +72,7 @@ const AuthSlice = createSlice({
       state.error = ''
       state.isLoggedIn = false
       StorageService.removeAuthToken()
-      redirect('/login')
+      window.location.assign('/login')
     },
   },
   extraReducers: (builder) => {
@@ -86,14 +85,14 @@ const AuthSlice = createSlice({
       toastService.showErrorMessage(action.error.message!)
     })
     builder.addCase(registerUser.fulfilled, (state, action) => {
-      if (action.payload.error) {
-        state.error = action.payload.error
-        toastService.showErrorMessage(action.payload.error)
+      if (action.payload?.error) {
+        state.error = action.payload?.error
+        toastService.showErrorMessage(action.payload?.error)
         return
       }
-      state.user = action.payload.data
+      state.user = action.payload?.data
       state.requestStatus = 'succeeded'
-      toastService.showSuccessMessage(action.payload.message)
+      toastService.showSuccessMessage(action.payload?.message)
     })
     // => Login Async Reducer
     builder.addCase(logInUser.pending, (state) => {

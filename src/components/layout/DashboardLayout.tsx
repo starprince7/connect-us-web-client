@@ -14,7 +14,7 @@ const DashboardLayout = () => {
   }, [isLoggedIn])
   return (
     <div>
-      <div className='flex'>
+      <div className='flex max-h-screen overflow-hidden'>
         <SideBar />
         <div className='flex-1 p-2 sm:p-5 bg-white'>
           <Outlet />

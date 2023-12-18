@@ -7,6 +7,7 @@ import { fetchStaffs, selectStaffs } from '../store/staffs/reducer'
 import apiClient from '../config/api-client'
 import { IStaff } from '../types/staff'
 import { IMessage } from '../types/message'
+import { LoadingPersonSkeleton } from './skeleton/PersonLoader'
 
 // It renders a list of persons.
 export function DirectMessageList() {
@@ -21,12 +22,11 @@ export function DirectMessageList() {
   useEffect(() => {
     loadStaffs()
   }, [])
-  if (requestStatus === 'loading' && !staffs.length) {
-    return <p className='text-sm gray-700 my-5 border w-full'>Loading</p>
-  }
+
   return (
     <div className='space-y-4 mt-5 max-w-fit'>
       <h2 className='text-sm font-semibold mb-10'>Direct Messages</h2>
+      {requestStatus === 'loading' && !staffs.length && <LoadingPersonSkeleton />}
       {staffs.map((staff, i) => (
         <Person key={i} {...staff} />
       ))}
@@ -54,6 +54,10 @@ function Person({ _id, fullname, leave, gender, email }: IStaff) {
   useEffect(() => {
     fetchConversation({ page: 1 })
   }, [])
+
+  if (!messageConversations.length) {
+    return <LoadingPersonSkeleton />
+  }
 
   return (
     <div
