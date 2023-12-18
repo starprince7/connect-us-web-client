@@ -6,16 +6,19 @@ import storage from 'redux-persist/lib/storage'
 import chatReducer from './chat/reducer'
 import authReducer from './auth/reducer'
 import newsReducer from './news/reducer'
+import staffsReducer from './staffs/reducer'
 
 export const rootReducer = combineReducers({
   Chat: chatReducer,
   Auth: authReducer,
   News: newsReducer,
+  Staffs: staffsReducer,
 })
 const rootPersistConfig = {
   key: 'root',
   storage,
-  blacklist: ['Chat', 'News'],
+  whitelist: ['Auth'],
+  // blacklist: ['Auth'],
 }
 const persistedReducer = persistReducer(rootPersistConfig, rootReducer)
 

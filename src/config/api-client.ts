@@ -1,6 +1,15 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
+import { StorageService } from '../lib/storage'
+import store from '../store'
+import { logoutAction } from '../store/auth/reducer'
 
-const API_ENDPOINT = process.env.REACT_APP_API_URL
+let API_ENDPOINT
+if (!process.env.REACT_APP_API_URL)
+  throw new Error(
+    "Confirm 'REACT_APP_API_URL' is set in the environment variables; create one if it's not there",
+  )
+
+API_ENDPOINT = process.env.REACT_APP_API_URL
 
 const apiClient = axios.create({
   baseURL: API_ENDPOINT,
@@ -11,13 +20,17 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   async (request: any) => {
-    // const token = await StorageService.getAuthToken();
+    const token = await StorageService.getAuthToken()
 
-    // if (token) {
-    //   request.headers = { ...request.headers, authorization: `Bearer ${token}` };
-    // } else {
-    //   request.headers = { ...request.headers, authorization: request?.headers?.authorization! || "" };
-    // }
+    // Attach token to make api request
+    if (token) {
+      request.headers = { ...request.headers, authorization: `Bearer ${token}` }
+    } else {
+      request.headers = {
+        ...request.headers,
+        authorization: request?.headers?.authorization || '',
+      }
+    }
 
     return request
   },
@@ -32,7 +45,7 @@ apiClient.interceptors.response.use(
   },
   async (error: AxiosError) => {
     if (error.response?.status && error.response?.status === 401) {
-      //   store?.dispatch(logOutAction());
+      // store?.dispatch(logoutAction())
     }
     return Promise.reject(error)
   },

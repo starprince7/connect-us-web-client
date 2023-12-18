@@ -12,10 +12,11 @@ export type LoginDto = {
 }
 
 export interface IUser {
+  _id: string
   fullname: string
   email: string
   password?: string
-  gender: 'M' | 'F'
+  gender: 'M' | 'F' | ''
   verified: boolean
   authority: number
   leave: boolean
