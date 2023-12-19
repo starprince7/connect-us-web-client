@@ -10,10 +10,10 @@ import apiClient from '../config/api-client'
 import { IMessage } from '../types/message'
 
 export const ChatBox = () => {
-  const { isChatBoxOpen, activeChatConversation } = useSelector(selectChat)
   const {
     user: { _id },
   } = useSelector(selectAuth)
+  const { isChatBoxOpen, activeChatConversation } = useSelector(selectChat)
 
   const [chatConversation, setChatConversation] = React.useState<IMessage[]>([])
 
@@ -90,7 +90,7 @@ function ChatBoxHeader() {
           {chatRecipientInformation?.fullname}
         </h1>
         <div className='text-sm text-gray-500'>
-          {chatRecipientInformation?.onLeave ? 'On-Leave' : 'Active'}
+          {chatRecipientInformation?.onLeave ? 'On Leave' : 'Active'}
         </div>
       </button>
       <button className='absolute top-5 right-4' onClick={() => dispatch(closeChat())}>
@@ -130,7 +130,7 @@ function ChatBoxInput() {
     }
   }
   return (
-    <div className='drop-shadow-xl absolute bottom-2 left-0 w-full px-3 z-20'>
+    <div className='drop-shadow-xl absolute bottom-2 left-0 w-full px-3 z-10'>
       <form
         onSubmit={handleChatMessageSubmit}
         className='rounded-lg flex items-center border space-x-2 p-1.5 bg-white'

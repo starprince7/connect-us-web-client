@@ -1,6 +1,7 @@
 import React from 'react'
-import { NewsBox } from '../../components/NewsBox'
+
 import { ProfileSideBar } from '../../components/ProfileSideBar'
+import { NewsBox } from '../../components/NewsBox'
 
 interface IContextNews {
   setShowUserNewsRoomInfo: React.Dispatch<React.SetStateAction<boolean>>
