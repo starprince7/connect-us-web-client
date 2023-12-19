@@ -11,8 +11,11 @@ const SignUp = () => {
         <div className='w-full md:w-1/2 hidden sm:block bg-black'>
           <ConnectUs />
         </div>
-        <div className='w-full md:w-1/2'>
-          <RegisterForm />
+        <div className='w-full md:w-1/2 overflow-y-auto'>
+          {/* Add a max-height to limit the form height */}
+          <div className='max-h-screen p-4'>
+            <RegisterForm />
+          </div>
         </div>
       </div>
     </div>
