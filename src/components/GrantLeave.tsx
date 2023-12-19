@@ -8,7 +8,7 @@ export const GrantLeave = () => {
     const [emailError, setEmailError] = React.useState('')
  
     const handleSubmit = (e:React.FormEvent)=>{
-        e.preventDefault()
+        e.preventDefault();
 
          // check the format of the email using a regular expression
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
