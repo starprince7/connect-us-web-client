@@ -16,6 +16,7 @@ export const TeamsPage = () => {
 
   return (
     <div className='space-y-12'>
+      {/* <button>Menu</button> */}
       <h2 className='text-4xl font-bold'>Teams</h2>
       {/* it renders <Other's teams /> component */}
       <div className='sm:flex items-start sm:space-x-4 h-screen'>
