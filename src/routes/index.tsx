@@ -5,6 +5,7 @@ import { TeamsPage } from '../pages/dashboard/teamsPage'
 import { NewsPage } from '../pages/dashboard/newsPage'
 import Login from '../pages/Login'
 import SignUp from '../pages/SignUp'
+import { StaffsLeavePage } from '../pages/dashboard/staffsLeavePage'
 
 export const RootRouter = () => {
   // const dispatch = useDispatch();
@@ -20,6 +21,7 @@ export const RootRouter = () => {
         <Route element={<DashboardLayout />}>
           <Route path='/teams' element={<TeamsPage />} />
           <Route path='/news' element={<NewsPage />} />
+          <Route path='/staffs-leave' element={<StaffsLeavePage />} />
           <Route path='/watch' />
         </Route>
       )}
