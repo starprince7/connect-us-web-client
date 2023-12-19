@@ -3,25 +3,34 @@
  */
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
+import apiClient from '../../config/api-client'
 
 interface INewsState {
   error: string
-  payload: any
   requestStatus: 'idle' | 'loading' | 'succeeded' | 'failed'
-  messages: {}[]
+  messages: News[]
+}
+
+type News = {
+  _id: string
+  title: string
+  content: string
+  user: string
+  system: true
+  responses: []
+  createdAt: string
 }
 
 const name = 'news'
 const initialState: INewsState = {
   error: '',
-  payload: null,
   requestStatus: 'idle',
   messages: [],
 }
 
 // Async redux action news.
 export const getNewsAsyncAction = createAsyncThunk(`${name}/newsAction`, async () => {
-  const result = (await axios.get('')) as any
+  const result = await apiClient.get('/notice')
   return result.data
 })
 
@@ -41,7 +50,7 @@ const newsSlice = createSlice({
       state.requestStatus = 'failed'
     })
     builder.addCase(getNewsAsyncAction.fulfilled, (state, action) => {
-      state.payload = action.payload
+      state.messages = action.payload.data
       state.requestStatus = 'succeeded'
     })
   },
