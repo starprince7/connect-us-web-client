@@ -60,5 +60,6 @@ export const SideBar = () => {
 const links = [
   { name: 'teams', icon: TeamIcon },
   { name: 'news', icon: NewsIcon },
+  { name: 'Create Signup link', icon: NewsIcon },
   { name: 'logout', icon: LogoutIcon },
 ]

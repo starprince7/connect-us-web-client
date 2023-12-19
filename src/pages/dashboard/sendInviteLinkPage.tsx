@@ -17,10 +17,10 @@ export const SendInviteLinkPage = () => {
       <SendInviteLinkContext.Provider value={{setSendInvite}}>
         <SendInviteLink />
       </SendInviteLinkContext.Provider>
-      {/* <ProfileSideBar
+      <ProfileSideBar
           isActive={sendInvite}
           closeProfileBar={() => setSendInvite(false)}
-        /> */}
+        />
       </div>
     </div>
   )
