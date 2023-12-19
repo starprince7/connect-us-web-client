@@ -21,7 +21,7 @@ export const RootRouter = () => {
         <Route element={<DashboardLayout />}>
           <Route path='/teams' element={<TeamsPage />} />
           <Route path='/news' element={<NewsPage />} />
-          <Route path='/send-invite-link' element={<SendInviteLinkPage />} />
+          <Route path='/create-staff-account' element={<SendInviteLinkPage />} />
           <Route path='/watch' />
         </Route>
       )}
