@@ -37,12 +37,15 @@ export function DirectMessageList() {
 // it fetches message conversation history with just this person
 function Person({ _id, fullname, leave, gender, email }: IStaff) {
   const dispatch = useDispatch()
+  const [loading, setLoading] = React.useState(false)
   const [messageConversations, setMessageConversation] = React.useState<IMessage[]>([])
   const [page, setPage] = React.useState(0)
   console.log('Conversation for ', fullname, ': +', messageConversations)
 
   async function fetchConversation({ page }: { page: number }) {
+    setLoading(true)
     const { data } = await apiClient.get(`/chat/${_id}?page=${page}`)
+    setLoading(false)
     if (page === 1) {
       setMessageConversation(data.data)
     } else {
@@ -55,13 +58,13 @@ function Person({ _id, fullname, leave, gender, email }: IStaff) {
     fetchConversation({ page: 1 })
   }, [])
 
-  if (!messageConversations.length) {
+  if (loading) {
     return <LoadingPersonSkeleton />
   }
 
   return (
     <div
-      className='flex items-center space-x-3 border w-full sm:w-64 p-5 rounded-lg bg-gray-100'
+      className='flex items-center space-x-3 border w-[90vw] mx-3 sm:w-64 p-5 rounded-lg bg-gray-100'
       onClick={() => {
         dispatch(openChat())
         dispatch(setActiveConversation({ page: Number(page), messageConversations }))

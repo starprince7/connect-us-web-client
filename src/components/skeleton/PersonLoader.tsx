@@ -5,7 +5,7 @@ export function LoadingPersonSkeleton() {
         .fill('')
         .map((_, i) => (
           <div className='animate-pulse' key={i}>
-            <div className='w-full sm:w-64 h-24 bg-gray-200 rounded-lg'></div>
+            <div className='w-[90vw] mx-3 sm:w-64 h-24 bg-gray-200 rounded-lg'></div>
           </div>
         ))}
     </>

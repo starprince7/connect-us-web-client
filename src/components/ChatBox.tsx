@@ -40,7 +40,7 @@ export const ChatBox = () => {
         isChatBoxOpen ? 'w-full opacity-100' : 'w-0 opacity-0'
       }  z-20 sm:static transition-all ease-in-out duration-100`}
     >
-      <div className='pb-16 pt-11 h-1/2 w-full col-span-2 rounded-2xl relative bg-gray-100 px-5 flex flex-col justify-end'>
+      <div className='pb-16 pt-11 h-screen sm:h-[700px] w-full col-span-2 rounded-2xl relative bg-gray-100 px-5 flex flex-col justify-end'>
         <ChatBoxHeader />
         {/* it renders chat messages inside of chat box */}
         <div className='h-[650px] mt-6 py-10 overflow-y-scroll overflow-x-hidden space-y-3'>
@@ -61,7 +61,7 @@ function RightTextBlock({ textContent }: { textContent: string }) {
   return (
     <div className='relative p-3 rounded-md w-fit max-w-[65%] sm:max-w-[50%] ml-auto bg-neutral-900 text-white mr-5'>
       <span className='absolute -right-2 rounded-sm top-3 w-10 h-8 rotate-45 bg-neutral-900'></span>
-      <p className='w-[92%] py-2 px-1 whitespace-nowrap pr-12'>{textContent}</p>
+      <p className='w-[92%] py-2 px-1 pr-12'>{textContent}</p>
     </div>
   )
 }
@@ -71,7 +71,7 @@ function LeftTextBlock({ textContent }: { textContent: string }) {
   return (
     <div className='relative p-3 rounded-md w-fit  max-w-[65%] sm:max-w-[50%] bg-gray-300 ml-5'>
       <span className='absolute -left-2 rounded-sm top-3 w-10 h-8 rotate-45 bg-gray-300'></span>
-      <p className='w-[92%] ml-auto py-2 whitespace-nowrap px-3'>{textContent}</p>
+      <p className='w-[92%] ml-auto py-2 px-4'>{textContent}</p>
     </div>
   )
 }
