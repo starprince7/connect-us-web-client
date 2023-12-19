@@ -1,5 +1,6 @@
+import { useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import collaborateIllustration from '../assets/illustrations/real_time_collaboration.svg'
+import collaborateIllustration from '../../assets/illustrations/real_time_collaboration.svg'
 
 import HeaderChatBox from './HeaderChatBox'
 import InputChatBox from './InputChatBox'
@@ -14,6 +15,18 @@ export const ChatBox = () => {
     user: { _id },
   } = useSelector(selectAuth)
   const { isChatBoxOpen, activeChatConversation } = useSelector(selectChat)
+  const chatContainerRef = useRef<HTMLDivElement>(null)
+  const endMessagesRef = useRef<HTMLDivElement>(null)
+
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
+    }
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [activeChatConversation])
 
   if (!isChatBoxOpen) {
     return (
@@ -33,15 +46,18 @@ export const ChatBox = () => {
         isChatBoxOpen ? 'w-full opacity-100' : 'w-0 opacity-0'
       }  z-20 sm:static transition-all ease-in-out duration-100`}
     >
-      <div className='pb-16 pt-11 h-screen sm:h-[700px] w-full col-span-2 rounded-2xl relative bg-gray-100 px-5 flex flex-col justify-end'>
+      <div className='pb-16 pt-11 h-screen sm:max-h-[600px] md:max-h-[700px] w-full col-span-2 rounded-2xl relative bg-gray-100 px-5 flex flex-col justify-end'>
         <HeaderChatBox />
         {/* it renders chat messages inside of chat box */}
-        <div className='h-[650px] mt-6 py-10 overflow-y-scroll overflow-x-hidden space-y-3'>
-          {activeChatConversation &&
+        <div
+          ref={chatContainerRef}
+          className='h-[650px] mt-6 py-10 overflow-y-scroll overflow-x-hidden space-y-3 scroll-smooth'
+        >
+          {activeChatConversation.length > 0 &&
             activeChatConversation.map((message) => {
               if (message.author === _id)
-                return <RightSideTextBlockChat textContent={message.content} />
-              else return <LeftSideTextBlockChat textContent={message.content} />
+                return <RightSideTextBlockChat key={message._id} textContent={message.content} />
+              else return <LeftSideTextBlockChat key={message._id} textContent={message.content} />
             })}
         </div>
         <InputChatBox />
