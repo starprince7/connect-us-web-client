@@ -12,6 +12,10 @@ interface IAuthStore {
   requestStatus: 'idle' | 'loading' | 'succeeded' | 'failed'
 }
 
+interface GenerateSignUpLinkRequestParam {
+  email: string
+}
+
 const name = 'auth'
 const initialState: IAuthStore = {
   error: '',
@@ -49,6 +53,15 @@ export const logInUser = createAsyncThunk<any, LoginDto>(
   async (logInCredential) => {
     if (!logInCredential) return toastService.showInfoMessage('Enter your login credentials')
     const result = await apiClient.post('/users/login', logInCredential)
+    return result.data
+  },
+)
+
+export const generateSignUpLink = createAsyncThunk<any, GenerateSignUpLinkRequestParam>(
+  `${name}/generateSignUpLink`,
+  async ({ email }) => {
+    if (!email) return toastService.showInfoMessage('Enter your login credentials')
+    const result = await apiClient.post('/admin/registration', { email })
     return result.data
   },
 )
@@ -114,6 +127,25 @@ const AuthSlice = createSlice({
       state.isLoggedIn = true
       toastService.showSuccessMessage(action.payload.message)
       StorageService.setAuthToken(action.payload.token)
+    })
+    // *** Generate Sign up link
+    builder.addCase(generateSignUpLink.pending, (state) => {
+      state.requestStatus = 'loading'
+    })
+    builder.addCase(generateSignUpLink.rejected, (state, action) => {
+      state.error = action.error.message!
+      state.requestStatus = 'failed'
+      toastService.showErrorMessage(action.error.message!)
+    })
+    builder.addCase(generateSignUpLink.fulfilled, (state, action) => {
+      if (action.payload.error) {
+        state.error = action.payload.error
+        toastService.showErrorMessage(action.payload.error)
+        return
+      }
+      state.user = action.payload.data
+      state.requestStatus = 'succeeded'
+      toastService.showSuccessMessage(action.payload.message)
     })
   },
 })
