@@ -14,7 +14,7 @@ export default function LeftSideTextBlockNews({
       {isSystem && (
         <p className='w-[92%] ml-3 py-1 px-4 text-xs italic text-gray-700'>~ System Event</p>
       )}
-      <p className='w-[92%] text-lg font-bold ml-4 my-1 px-4'>{title}</p>
+      <p className='w-[92%] text-lg font-bold ml-4 my-1 px-4 capitalize'>{title}</p>
       <p className='w-[92%] ml-4 py-1 px-4'>{textContent}</p>
     </div>
   )

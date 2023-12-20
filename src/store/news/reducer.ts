@@ -9,6 +9,7 @@ interface INewsState {
   error: string
   requestStatus: 'idle' | 'loading' | 'succeeded' | 'failed'
   messages: News[]
+  message: string
 }
 
 type News = {
@@ -34,6 +35,7 @@ const initialState: INewsState = {
   error: '',
   requestStatus: 'idle',
   messages: [],
+  message: '',
 }
 
 // Async redux action news.
@@ -82,7 +84,7 @@ const newsSlice = createSlice({
       state.requestStatus = 'failed'
     })
     builder.addCase(createNews.fulfilled, (state, action) => {
-      state.messages = action.payload.data
+      state.message = action.payload.message
       state.requestStatus = 'succeeded'
     })
   },

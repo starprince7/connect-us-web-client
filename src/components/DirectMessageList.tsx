@@ -14,7 +14,6 @@ import useLocalStorage from '../hooks/useLocalStorage'
 export function DirectMessageList() {
   const dispatch = useDispatch()
   const { staffs, page, requestStatus, hasMore } = useSelector(selectStaffs)
-  console.log('staffs:', staffs)
 
   const loadStaffs = () => {
     dispatch(fetchStaffs({ page: page + 1 }) as any)
@@ -40,19 +39,18 @@ export function DirectMessageList() {
 function Person({ _id, fullname, leave, gender, email }: IStaff) {
   const dispatch = useDispatch()
   const [loading, setLoading] = React.useState(false)
-  const [messageConversations, setMessageConversation] = useLocalStorage<IMessage[]>(email, [])
+  const [messageConversations, setMessageConversation] = React.useState<IMessage[]>([])
+  // const [messageConversations, setMessageConversation] = useLocalStorage<IMessage[]>(email, [])
   const [page, setPage] = React.useState(0)
+  const [pages, setPages] = React.useState(0)
 
   async function fetchConversation({ page }: { page: number }) {
     setLoading(true)
     const { data } = await apiClient.get(`/chat/${_id}?page=${page}`)
     setLoading(false)
-    if (page === 1) {
-      setMessageConversation(data.data)
-    } else {
-      setMessageConversation([...messageConversations, ...data.data])
-    }
+    setMessageConversation(data.data)
     setPage(data.page)
+    setPages(data.pages)
   }
 
   useEffect(() => {
@@ -73,7 +71,7 @@ function Person({ _id, fullname, leave, gender, email }: IStaff) {
       }`}
       onClick={() => {
         dispatch(openChat())
-        dispatch(setActiveConversation({ page: Number(page), messageConversations }))
+        dispatch(setActiveConversation({ page, pages, messageConversations }))
         dispatch(setChatRecipientInformation({ email, fullname, onLeave: leave, _id }))
       }}
     >
