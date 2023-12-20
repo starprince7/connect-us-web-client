@@ -7,6 +7,7 @@ import Login from '../pages/Login'
 import SignUp from '../pages/SignUp'
 import { useSelector } from 'react-redux'
 import { selectAuth } from '../store/auth/reducer'
+import { SendInviteLinkPage } from '../pages/dashboard/sendInviteLinkPage'
 
 export const RootRouter = () => {
   const { isLoggedIn } = useSelector(selectAuth)
@@ -20,6 +21,7 @@ export const RootRouter = () => {
         <Route element={<DashboardLayout />}>
           <Route path='/teams' element={<TeamsPage />} />
           <Route path='/news' element={<NewsPage />} />
+          <Route path='/create-staff-account' element={<SendInviteLinkPage />} />
           <Route path='/watch' />
         </Route>
       )}
