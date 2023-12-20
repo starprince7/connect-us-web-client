@@ -23,7 +23,7 @@ export const RootRouter = () => {
           <Route path='/teams' element={<TeamsPage />} />
           <Route path='/news' element={<NewsPage />} />
           <Route path='/grant-leave' element={<GrantLeavePage />} />
-          <Route path='/create-staff-account' element={<SendInviteLinkPage />} /
+          <Route path='/create-staff-account' element={<SendInviteLinkPage />} />
           <Route path='/watch' />
         </Route>
       )}
