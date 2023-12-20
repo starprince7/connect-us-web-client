@@ -14,7 +14,7 @@ export default function RightSideTextBlockNews({
       {isSystem && (
         <p className='w-[92%] py-1 px-1 pr-12 text-xs italic text-gray-700'>~ System Event</p>
       )}
-      <p className='w-[92%] text-lg font-bold my-1 px-1 pr-12 tracking-wide'>{title}</p>
+      <p className='w-[92%] text-lg font-bold my-1 px-1 pr-12 tracking-wide capitalize'>{title}</p>
       <p className='w-[92%] py-1 px-1 pr-12'>{textContent}</p>
     </div>
   )

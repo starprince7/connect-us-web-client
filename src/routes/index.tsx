@@ -5,12 +5,12 @@ import { TeamsPage } from '../pages/dashboard/teamsPage'
 import { NewsPage } from '../pages/dashboard/newsPage'
 import Login from '../pages/Login'
 import SignUp from '../pages/SignUp'
+import { useSelector } from 'react-redux'
+import { selectAuth } from '../store/auth/reducer'
 import { GrantLeavePage } from '../pages/dashboard/grantLeavePage'
 
 export const RootRouter = () => {
-  // const dispatch = useDispatch();
-  // const { isLoggedIn } = useSelector(authSelector);
-  const isLoggedIn = true
+  const { isLoggedIn } = useSelector(selectAuth)
 
   return (
     <Routes>

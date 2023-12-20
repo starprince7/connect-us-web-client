@@ -22,7 +22,7 @@ export default function InputChatBox() {
       dispatch(
         fetchConversationStoreAction({
           _id,
-          page: pages > page ? Number(page) + 1 : Number(page),
+          page: pages > page ? page + 1 : page,
         }) as any,
       )
       setChatMessage('')
