@@ -8,18 +8,19 @@
 
 html,
 body,
-#root{
-  width:100%;
-  position:relative;
+#root {
+  width: 100%;
+  position: relative;
   min-height: 100vh;
   font-family: poppins, sans-serif;
 
 }
 
-a{
+a {
   text-decoration: none;
   color: inherit;
 }
-li{
+
+li {
   list-style: none;
 }

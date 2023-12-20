@@ -70,7 +70,7 @@ const RegisterForm = () => {
     <div>
       <div className='w-full md: max-w-[550px] flex my-20 md:mt-10 min-h-screen  flex-col m-auto px-5'>
         <h3 className='py-5 font-bold text-xl'>Sign Up</h3>
-        <form className=' rounded p-3 bg-gray-100' onSubmit={handleSubmit}>
+        <form className='rounded p-3 bg-gray-100' onSubmit={handleSubmit}>
           <Input
             label='Full Name'
             id='fullname'

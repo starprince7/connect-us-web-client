@@ -48,7 +48,7 @@ export const SideBar = () => {
               } hover:bg-gray-200 flex space-x-3 items-center w-44 p-4 rounded-lg`}
             >
               <img src={icon} alt='icon' className='h-5' />
-              <span className='capitalize'>{name}</span>
+              <span className='capitalize'>{name.split('-').join(' ')}</span>
             </Link>
           )
         })}
@@ -60,5 +60,6 @@ export const SideBar = () => {
 const links = [
   { name: 'teams', icon: TeamIcon },
   { name: 'news', icon: NewsIcon },
+  { name: 'create-staff-account', icon: NewsIcon },
   { name: 'logout', icon: LogoutIcon },
 ]

@@ -44,7 +44,11 @@ export default function InputNewsBox() {
             onChange={(e) => setContent(e.target.value)}
           ></textarea>
         </div>
-        <button type='submit' className='rounded-lg bg-black py-2 px-10 font-semibold text-white'>
+        <button
+          type='submit'
+          disabled={requestStatus == 'loading'}
+          className='rounded-lg bg-black py-2 px-10 font-semibold text-white'
+        >
           {requestStatus == 'loading' ? 'Sending...' : 'Send'}
         </button>
       </form>
