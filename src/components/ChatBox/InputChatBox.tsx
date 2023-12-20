@@ -48,7 +48,11 @@ export default function InputChatBox() {
           value={chatMessage}
           onChange={(e) => setChatMessage(e.target.value)}
         />
-        <button type='submit' className='rounded-lg bg-black py-2.5 px-10 font-semibold text-white'>
+        <button
+          type='submit'
+          disabled={isPostingMessage}
+          className='rounded-lg bg-black py-2.5 px-10 font-semibold text-white'
+        >
           {isPostingMessage ? 'Sending...' : 'Send'}
         </button>
       </form>
