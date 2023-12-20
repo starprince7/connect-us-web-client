@@ -9,6 +9,7 @@ interface INewsState {
   error: string
   requestStatus: 'idle' | 'loading' | 'succeeded' | 'failed'
   messages: News[]
+  message: string
 }
 
 type News = {
@@ -20,19 +21,40 @@ type News = {
   responses: []
   createdAt: string
 }
+type NewsRequestParams = {
+  page: number
+  limit?: number
+}
+type CreateNewsRequestParams = {
+  title: string
+  content: string
+}
 
 const name = 'news'
 const initialState: INewsState = {
   error: '',
   requestStatus: 'idle',
   messages: [],
+  message: '',
 }
 
 // Async redux action news.
-export const getNewsAsyncAction = createAsyncThunk(`${name}/newsAction`, async () => {
-  const result = await apiClient.get('/notice')
-  return result.data
-})
+export const getNewsAsyncAction = createAsyncThunk<any, NewsRequestParams>(
+  `${name}/getNewsAsyncAction`,
+  async ({ page, limit }) => {
+    const result = await apiClient.get(`/notice?page=${page}&limit=${limit}`)
+    return result.data
+  },
+)
+
+// Async redux action news.
+export const createNews = createAsyncThunk<any, CreateNewsRequestParams>(
+  `${name}/createNews`,
+  async ({ title, content }) => {
+    const result = await apiClient.post(`/notice`, { title, content })
+    return result.data
+  },
+)
 
 // Create slice.
 const newsSlice = createSlice({
@@ -53,9 +75,21 @@ const newsSlice = createSlice({
       state.messages = action.payload.data
       state.requestStatus = 'succeeded'
     })
+    // Create News Case
+    builder.addCase(createNews.pending, (state) => {
+      state.requestStatus = 'loading'
+    })
+    builder.addCase(createNews.rejected, (state, action) => {
+      state.error = action.error.message as string
+      state.requestStatus = 'failed'
+    })
+    builder.addCase(createNews.fulfilled, (state, action) => {
+      state.message = action.payload.message
+      state.requestStatus = 'succeeded'
+    })
   },
 })
 
 export const { moreNewsAction } = newsSlice.actions
-export const selectNews = (store: any) => store.news as INewsState
+export const selectNews = (store: any) => store.News as INewsState
 export default newsSlice.reducer
