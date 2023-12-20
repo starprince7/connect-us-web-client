@@ -54,10 +54,7 @@ const StaffsSlice = createSlice({
     })
     builder.addCase(fetchStaffs.fulfilled, (state, action) => {
       state.requestStatus = 'succeeded'
-      state.staffs =
-        action.payload?.page === 1
-          ? action.payload?.data
-          : [...state.staffs, ...(action.payload?.data ?? [])]
+      state.staffs = action.payload?.data
       state.page = action.payload?.page
       state.hasMore = state.staffs?.length < action.payload?.count
       state.count = action.payload?.count
