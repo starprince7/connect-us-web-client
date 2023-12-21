@@ -9,6 +9,7 @@ interface IChatStore {
   activeChatConversation: IMessage[]
   page: number
   pages: number
+  hasMore: boolean
   chatRecipientInformation: {
     fullname: string
     email: string
@@ -28,6 +29,7 @@ const initialState: IChatStore = {
   activeChatConversation: [],
   page: 0,
   pages: 0,
+  hasMore: false,
   chatRecipientInformation: {
     fullname: '',
     email: '',
@@ -40,6 +42,13 @@ const initialState: IChatStore = {
 // Async redux action chat.
 export const fetchConversationStoreAction = createAsyncThunk<any, FetchConversationParam>(
   `${name}/fetchConversationStoreAction`,
+  async ({ page, _id }) => {
+    const { data } = await apiClient.get(`/chat/${_id}?page=${page}`)
+    return data
+  },
+)
+export const fetchConversationForScrolling = createAsyncThunk<any, FetchConversationParam>(
+  `${name}/fetchConversationForScrolling`,
   async ({ page, _id }) => {
     const { data } = await apiClient.get(`/chat/${_id}?page=${page}`)
     return data
@@ -80,6 +89,25 @@ const chatSlice = createSlice({
       state.activeChatConversation = action.payload?.data
       state.page = action.payload?.page
       state.pages = action.payload?.pages
+      state.hasMore = action.payload.pages > action.payload.page
+      state.requestStatus = 'succeeded'
+    })
+    // Fetch Conversations For When Scroll Start
+    builder.addCase(fetchConversationForScrolling.pending, (state) => {
+      state.requestStatus = 'loading'
+    })
+    builder.addCase(fetchConversationForScrolling.rejected, (state, action) => {
+      state.error = action.error.message as string
+      state.requestStatus = 'failed'
+    })
+    builder.addCase(fetchConversationForScrolling.fulfilled, (state, action) => {
+      state.activeChatConversation =
+        action.payload?.page == 1
+          ? action.payload?.data
+          : [...state.activeChatConversation, ...(action.payload?.data ?? [])]
+      state.page = action.payload?.page
+      state.pages = action.payload?.pages
+      state.hasMore = action.payload.pages > action.payload.page
       state.requestStatus = 'succeeded'
     })
   },

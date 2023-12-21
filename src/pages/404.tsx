@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Navbar from '../components/navbar/Navbar'
 import NotFoundArt from '../assets/illustrations/taken_to_404.svg'
+import { Link } from 'react-router-dom'
 
 export default function NotFoundPage() {
   return (
@@ -26,7 +27,10 @@ function NotFoundText() {
     <div className='w-full md: max-w-[550px] mt-20 min-h-screen grid place-content-center m-auto px-5'>
       <div>
         <h3 className='py-5 font-bold text-3xl md:text-5xl'>404</h3>
-        <h3 className='py-5 font-semibold text-lg'>Page was not found!</h3>
+        <h3 className='pt-5 pb-1 font-semibold text-lg'>Page was not found!</h3>
+        <Link to='/login' className='text-blue-500 underline'>
+          Login
+        </Link>
       </div>
     </div>
   )
