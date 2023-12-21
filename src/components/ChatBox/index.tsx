@@ -74,7 +74,7 @@ export const ChatBox = () => {
         <div
           ref={chatContainerRef}
           onScroll={handleScroll}
-          className='h-[650px] mt-6 py-10 overflow-y-scroll overflow-x-hidden space-y-3 scroll-smooth'
+          className='lg:h-[650px] sm:h-[520px] mt-6 py-10 overflow-y-scroll overflow-x-hidden space-y-3 scroll-smooth'
         >
           {false && (
             <button
