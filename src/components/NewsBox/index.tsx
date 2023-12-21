@@ -47,7 +47,7 @@ export const NewsBox = () => {
             <p className='mx-auto my-2 text-sm w-full text-center'>Loading chats...</p>
           </div>
         )}
-        {inComponentMessages.length &&
+        {!!inComponentMessages.length &&
           inComponentMessages.map((message) => {
             if (message.user === _id && authority > 0)
               return (

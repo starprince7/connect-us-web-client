@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ProfileSideBar } from '../../components/ProfileSideBar'
+import { ProfileSideBar } from '../../components/layout/ProfileSideBar'
 import { NewsBox } from '../../components/NewsBox'
 
 interface IContextNews {

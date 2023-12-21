@@ -72,7 +72,7 @@ function Person({ _id, fullname, leave, gender, email }: IStaff) {
       onClick={() => {
         dispatch(openChat())
         dispatch(setActiveConversation({ page, pages, messageConversations }))
-        dispatch(setChatRecipientInformation({ email, fullname, onLeave: leave, _id }))
+        dispatch(setChatRecipientInformation({ email, fullname, onLeave: leave, _id, gender }))
       }}
     >
       <div>
