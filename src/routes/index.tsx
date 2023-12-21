@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux'
 import { selectAuth } from '../store/auth/reducer'
 import { GrantLeavePage } from '../pages/dashboard/grantLeavePage'
 import { SendInviteLinkPage } from '../pages/dashboard/sendInviteLinkPage'
+import { StaffsOnLeavePage } from '../pages/dashboard/staffs-on-leave'
 
 export const RootRouter = () => {
   const { isLoggedIn } = useSelector(selectAuth)
@@ -23,6 +24,7 @@ export const RootRouter = () => {
           <Route path='/teams' element={<TeamsPage />} />
           <Route path='/news' element={<NewsPage />} />
           <Route path='/grant-leave' element={<GrantLeavePage />} />
+          <Route path='/staffs-on-leave' element={<StaffsOnLeavePage />} />
           <Route path='/create-staff-account' element={<SendInviteLinkPage />} />
           <Route path='/watch' />
         </Route>

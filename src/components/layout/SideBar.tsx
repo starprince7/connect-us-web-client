@@ -62,5 +62,6 @@ const links = [
   { name: 'news', icon: NewsIcon },
   { name: 'create-staff-account', icon: NewsIcon },
   { name: 'grant-leave', icon: NewsIcon },
+  { name: 'staffs-on-leave', icon: NewsIcon },
   { name: 'logout', icon: LogoutIcon },
 ]
