@@ -11,6 +11,7 @@ import LogoDashboard from '../../assets/icons/logo-dashboard.svg'
 import CreateLinkIcon from '../../assets/icons/create-link-icon.svg'
 import GrantLeaveIcon from '../../assets/icons/grant-leave-icon.svg'
 import StaffsOnLeaveIcon from '../../assets/icons/staffs-leave-icon.svg'
+import apiClient from '../../config/api-client'
 
 export const SideBar = () => {
   const dispatch = useDispatch()
@@ -20,6 +21,13 @@ export const SideBar = () => {
   const {
     user: { authority },
   } = useSelector(selectAuth)
+
+  const handleLogOut = async () => {
+    const { data } = await apiClient.post('/users/logout')
+    if (data.message) {
+      dispatch(logoutAction())
+    }
+  }
 
   return (
     <div className='border hidden md:block overflow-hidden sm:w-60 space-y-8 px-5 py-5 min-h-screen'>
@@ -37,7 +45,7 @@ export const SideBar = () => {
               <button
                 key={name}
                 type='button'
-                onClick={() => dispatch(logoutAction())}
+                onClick={() => handleLogOut()}
                 className={`${
                   isAuthorized && isActiveRoute ? 'bg-gray-200 shadow-lg' : 'bg-gray-50'
                 } hover:bg-gray-200 flex space-x-3 items-center w-44 p-4 rounded-lg`}

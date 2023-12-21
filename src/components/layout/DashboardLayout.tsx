@@ -6,15 +6,27 @@ import { logoutAction, selectAuth } from '../../store/auth/reducer'
 
 const DashboardLayout = () => {
   const dispatch = useDispatch()
-  const { isLoggedIn } = useSelector(selectAuth)
+  const {
+    isLoggedIn,
+    user: { fullname, email },
+  } = useSelector(selectAuth)
+
   useEffect(() => {
     if (!isLoggedIn) {
       dispatch(logoutAction())
     }
   }, [isLoggedIn])
+
   return (
     <div>
-      <div className='flex max-h-screen overflow-hidden'>
+      <div className='flex max-h-screen overflow-hidden relative'>
+        <div className='absolute right-14 top-4 z-20'>
+          <p className='font-bold mb-1 text-neutral-800'>Welcome, back {fullname}</p>
+          <p className='text-neutral-500'>{email}</p>
+          <p className='text-neutral-700 italic text-xs mt-1 underline'>
+            Special features are now unlocked at the sidebar menu
+          </p>
+        </div>
         <SideBar />
         <div className='flex-1 p-2 sm:p-5 bg-white'>
           <Outlet />
