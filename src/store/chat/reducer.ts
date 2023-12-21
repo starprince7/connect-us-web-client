@@ -13,6 +13,7 @@ interface IChatStore {
     fullname: string
     email: string
     onLeave: boolean
+    gender: 'M' | 'F' | ''
     _id: string
   }
 }
@@ -31,6 +32,7 @@ const initialState: IChatStore = {
     fullname: '',
     email: '',
     onLeave: false,
+    gender: '',
     _id: '',
   },
 }

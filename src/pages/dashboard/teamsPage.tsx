@@ -1,6 +1,6 @@
 import React from 'react'
 import { ChatBox } from '../../components/ChatBox'
-import { ProfileSideBar } from '../../components/ProfileSideBar'
+import { ProfileSideBar } from '../../components/layout/ProfileSideBar'
 import { DirectMessageList } from '../../components/DirectMessageList'
 
 interface IChatContext {

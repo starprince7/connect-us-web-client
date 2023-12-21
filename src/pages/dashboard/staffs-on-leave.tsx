@@ -2,7 +2,7 @@ import { IStaff } from '../../types/staff'
 import AvatarChatMan from '../../assets/icons/chat-man-avatar.svg'
 import AvatarChatWoman from '../../assets/icons/chat-woman-avatar.svg'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { endStaffLeave, fetchStaffsOnLeave, selectStaffs } from '../../store/staffs/reducer'
 import { LoadingPersonSkeleton } from '../../components/skeleton/PersonLoader'
 
@@ -39,8 +39,10 @@ function AllStaffsOnLeave() {
 function Staff({ _id, fullname, leave, gender = 'M', email }: IStaff) {
   const dispatch = useDispatch()
   const { requestStatus } = useSelector(selectStaffs)
+  const [staffId, setStaffId] = useState('')
 
   const handleEndLeave = (id: string) => {
+    setStaffId(id)
     dispatch(endStaffLeave({ id }) as any)
   }
 
@@ -51,9 +53,9 @@ function Staff({ _id, fullname, leave, gender = 'M', email }: IStaff) {
       <button
         disabled={requestStatus === 'loading'}
         onClick={() => handleEndLeave(_id)}
-        className='absolute right-3 top-2.5 z-20 px-1.5 py-1 rounded text-white text-xs font-semibold bg-green-600'
+        className='absolute right-3 top-2.5 z-20 px-1.5 py-1 rounded text-white text-xs font-semibold bg-rose-600'
       >
-        {requestStatus === 'loading' ? '...' : 'End leave'}
+        {staffId === _id && requestStatus === 'loading' ? '...' : 'End this leave'}
       </button>
       <div>
         <img src={gender === 'M' ? AvatarChatMan : AvatarChatWoman} alt='avatar image' />

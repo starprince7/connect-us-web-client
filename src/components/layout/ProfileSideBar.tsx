@@ -1,9 +1,9 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import AvatarChatMan from '../assets/icons/chat-man-avatar.svg'
+import AvatarChatMan from '../../assets/icons/chat-man-avatar.svg'
 import AvatarChatWoman from '../../assets/icons/chat-woman-avatar.svg'
 import { HiXCircle as CloseIcon } from 'react-icons/hi'
-import { selectChat } from '../store/chat/reducer'
+import { selectChat } from '../../store/chat/reducer'
 
 type Props = {
   isActive: boolean
@@ -12,7 +12,7 @@ type Props = {
 
 export const ProfileSideBar = ({ isActive, closeProfileBar }: Props) => {
   const {
-    chatRecipientInformation: { email, fullname, onLeave },
+    chatRecipientInformation: { email, fullname, onLeave, gender },
   } = useSelector(selectChat)
   return (
     <div
@@ -24,7 +24,11 @@ export const ProfileSideBar = ({ isActive, closeProfileBar }: Props) => {
         <CloseIcon style={{ width: 30, height: 30 }} />
       </button>
       <div className='text-center'>
-        <img src={AvatarChatMan} alt='Avatar logo' className='h-28 mx-auto mb-3' />
+        <img
+          src={gender === 'M' ? AvatarChatMan : AvatarChatWoman}
+          alt='Avatar logo'
+          className='h-28 mx-auto mb-3'
+        />
         <div className='text-gray-500 text-sm'>{onLeave ? 'On Leave' : 'Active'}</div>
         <h3 className='text-xl font-bold my-1'>{fullname}</h3>
         <div className='text-gray-500 text-sm'>{email}</div>
