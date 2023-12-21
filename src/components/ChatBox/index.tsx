@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react'
+import { LegacyRef, useEffect, useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import InfiniteScroll from 'react-infinite-scroller'
 import collaborateIllustration from '../../assets/illustrations/real_time_collaboration.svg'
 
 import HeaderChatBox from './HeaderChatBox'
@@ -7,16 +8,25 @@ import InputChatBox from './InputChatBox'
 import RightSideTextBlockChat from './RightSideTextBox'
 import LeftSideTextBlockChat from './LeftSideTextBox'
 
-import { selectChat } from '../../store/chat/reducer'
+import { fetchConversationForScrolling, selectChat } from '../../store/chat/reducer'
 import { selectAuth } from '../../store/auth/reducer'
 
 export const ChatBox = () => {
   const {
     user: { _id },
   } = useSelector(selectAuth)
-  const { isChatBoxOpen, activeChatConversation } = useSelector(selectChat)
+  const {
+    isChatBoxOpen,
+    activeChatConversation,
+    page,
+    hasMore,
+    requestStatus,
+    chatRecipientInformation,
+  } = useSelector(selectChat)
   const chatContainerRef = useRef<HTMLDivElement>(null)
-  const endMessagesRef = useRef<HTMLDivElement>(null)
+  const dispatch = useDispatch()
+
+  const [showLoadMore, setShowLoadMore] = useState(false)
 
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
@@ -27,6 +37,18 @@ export const ChatBox = () => {
   useEffect(() => {
     scrollToBottom()
   }, [activeChatConversation])
+
+  const handleScroll = () => {
+    if (chatContainerRef.current) {
+      // Check if the scroll bar is at the top
+      const isAtTop = chatContainerRef.current.scrollTop === 0
+
+      // Do something based on whether it's at the top or not
+      if (isAtTop && hasMore) {
+        setShowLoadMore(true)
+      }
+    }
+  }
 
   if (!isChatBoxOpen) {
     return (
@@ -51,8 +73,24 @@ export const ChatBox = () => {
         {/* it renders chat messages inside of chat box */}
         <div
           ref={chatContainerRef}
+          onScroll={handleScroll}
           className='h-[650px] mt-6 py-10 overflow-y-scroll overflow-x-hidden space-y-3 scroll-smooth'
         >
+          {false && (
+            <button
+              onClick={() =>
+                dispatch(
+                  fetchConversationForScrolling({
+                    page: page + 1,
+                    _id: chatRecipientInformation._id,
+                  }) as any,
+                )
+              }
+              className='p-2 rounded border mx-auto block'
+            >
+              Load More
+            </button>
+          )}
           {activeChatConversation.length > 0 &&
             activeChatConversation.map((message) => {
               if (message.author === _id)
