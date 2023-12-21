@@ -40,7 +40,7 @@ export const NewsBox = () => {
       <HeaderNewsBox />
       <div
         ref={chatContainerRef}
-        className='h-[650px] mt-12 pt-7 pb-9 mb-28 overflow-y-scroll overflow-x-hidden space-y-3 scroll-smooth'
+        className='lg:h-[650px] sm:h-[520px] mt-12 pt-7 pb-9 mb-28 overflow-y-scroll overflow-x-hidden space-y-3 scroll-smooth'
       >
         {requestStatus === 'loading' && (
           <div className='absolute top-16 pt-6 left-0 z-20 w-full'>
