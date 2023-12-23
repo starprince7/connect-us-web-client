@@ -1,10 +1,11 @@
 interface Props {
   className?: string
+  numberOfSkeletons?: number
 }
-export function LoadingPersonSkeleton({ className }: Props) {
+export function LoadingPersonSkeleton({ className, numberOfSkeletons = 6 }: Props) {
   return (
     <>
-      {Array(6)
+      {Array(numberOfSkeletons)
         .fill('')
         .map((_, i) => (
           <div className='animate-pulse' key={i}>
