@@ -25,7 +25,6 @@ const LoginForm = () => {
       password,
     }
 
-    console.log(loginData)
     dispatch(logInUser(loginData) as any)
 
     //reset form field

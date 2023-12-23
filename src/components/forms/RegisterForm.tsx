@@ -9,7 +9,7 @@ import { registerUser, selectAuth } from '../../store/auth/reducer'
 const RegisterForm = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { isLoggedIn } = useSelector(selectAuth)
+  const { isLoggedIn, requestStatus } = useSelector(selectAuth)
 
   const [fullname, setFullName] = useState('')
   const [email, setEmail] = useState('')
@@ -59,6 +59,10 @@ const RegisterForm = () => {
     dispatch(registerUser(registrationData) as any)
 
     // Reset form fields
+    clearFormState()
+  }
+
+  function clearFormState() {
     setFullName('')
     setEmail('')
     setPassword('')
@@ -132,8 +136,11 @@ const RegisterForm = () => {
             value={key}
             onChange={(e) => setKey(e.target.value)}
           />
-          <button className='bg-black w-full flex justify-center text-white font-semibold rounded p-2 my-6'>
-            Sign In
+          <button
+            disabled={requestStatus === 'loading'}
+            className='bg-black w-full flex justify-center text-white font-semibold rounded p-2 my-6'
+          >
+            {requestStatus === 'loading' ? '...' : 'Sign Up'}
           </button>
         </form>
       </div>

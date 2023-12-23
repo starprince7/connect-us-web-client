@@ -4,6 +4,7 @@ import toastService from '../../lib/toast-alert'
 import apiClient from '../../config/api-client'
 import { getFromUrl } from '../../lib/getUrlParam'
 import { StorageService } from '../../lib/storage'
+import { redirect } from 'react-router-dom'
 
 interface IAuthStore {
   error: string
@@ -37,14 +38,17 @@ export const registerUser = createAsyncThunk<any, UserDto>(
   `${name}/registerUser`,
   async (registrationData) => {
     const registrationToken = getFromUrl('token')
-
-    if (!registrationToken) return toastService.showInfoMessage('Invalid registration link')
     if (!registrationData) return toastService.showInfoMessage('No registration information')
-    const result = await apiClient.post(
-      `/users/signup?token=${registrationToken}`,
-      registrationData,
-    )
-    return result.data
+
+    if (registrationToken || registrationData.adminKey) {
+      const result = await apiClient.post(
+        `/users/signup?token=${registrationToken}`,
+        registrationData,
+      )
+      return result.data
+    } else {
+      return toastService.showInfoMessage('Invalid registration link')
+    }
   },
 )
 
@@ -103,9 +107,15 @@ const AuthSlice = createSlice({
         toastService.showErrorMessage(action.payload?.error)
         return
       }
-      state.user = action.payload?.data
-      state.requestStatus = 'succeeded'
-      toastService.showSuccessMessage(action.payload?.message)
+      const userPayload = action.payload?.data as IUser
+      if (userPayload && userPayload.verified) {
+        state.requestStatus = 'succeeded'
+        state.isLoggedIn = true
+        state.user = userPayload
+        toastService.showSuccessMessage(action.payload.message)
+        StorageService.setAuthToken(action.payload.token)
+        redirect('/teams')
+      }
     })
     // => Login Async Reducer
     builder.addCase(logInUser.pending, (state) => {
@@ -127,6 +137,8 @@ const AuthSlice = createSlice({
       state.isLoggedIn = true
       toastService.showSuccessMessage(action.payload.message)
       StorageService.setAuthToken(action.payload.token)
+      alert('About to call redirect function.')
+      redirect('/teams')
     })
     // *** Generate Sign up link
     builder.addCase(generateSignUpLink.pending, (state) => {
