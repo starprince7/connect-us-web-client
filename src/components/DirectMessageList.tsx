@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react'
+import InfiniteScroll from 'react-infinite-scroller'
+
 import AvatarChatMan from '../assets/icons/chat-man-avatar.svg'
 import AvatarChatWoman from '../assets/icons/chat-woman-avatar.svg'
 import { useDispatch, useSelector } from 'react-redux'
@@ -23,13 +25,42 @@ export function DirectMessageList() {
     if (staffs.length === 0) loadStaffs()
   }, [])
 
+  const handleScroll = () => {
+    const container = document.getElementById('scroll-container')
+    if (!container) return
+
+    const isScrolledToBottom =
+      container.scrollTop + container.clientHeight === container.scrollHeight
+
+    if (isScrolledToBottom) {
+      // User has scrolled to the bottom, load more data
+      if (hasMore && requestStatus !== 'loading') {
+        alert(hasMore)
+        dispatch(fetchStaffs({ page: page + 1 }) as any)
+      }
+    }
+  }
+
+  useEffect(() => {
+    const container = document.getElementById('scroll-container')
+    if (!container) return
+
+    container.addEventListener('scroll', handleScroll)
+
+    return () => {
+      container.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
   return (
-    <div className='space-y-4 mt-5 max-w-fit'>
+    <div className='space-y-4 mt-5 max-w-fit sm:h-[85%] min-w-fit overflow-hidden'>
       <h2 className='text-sm font-semibold mb-10'>Direct Messages</h2>
-      {requestStatus === 'loading' || (!staffs.length && <LoadingPersonSkeleton />)}
-      {staffs.map((staff, i) => (
-        <Person key={i} {...staff} />
-      ))}
+      <div id='scroll-container' className='min-w-fit overflow-y-scroll sm:h-[82%] space-y-3 py-1'>
+        {requestStatus === 'loading' || (!staffs.length && <LoadingPersonSkeleton />)}
+        {staffs.map((staff, i) => (
+          <Person key={i} {...staff} />
+        ))}
+      </div>
     </div>
   )
 }
