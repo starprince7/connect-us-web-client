@@ -17,13 +17,16 @@ export function DirectMessageList() {
   const dispatch = useDispatch()
   const { staffs, page, requestStatus, hasMore } = useSelector(selectStaffs)
 
+  const [isFetching, setIsFetching] = React.useState(false)
+
   const loadStaffs = () => {
     dispatch(fetchStaffs({ page: page + 1 }) as any)
   }
 
   useEffect(() => {
     if (staffs.length === 0) loadStaffs()
-  }, [])
+    if (requestStatus !== 'loading') setIsFetching(false)
+  }, [requestStatus])
 
   const handleScroll = () => {
     const container = document.getElementById('scroll-container')
@@ -34,8 +37,8 @@ export function DirectMessageList() {
 
     if (isScrolledToBottom) {
       // User has scrolled to the bottom, load more data
+      setIsFetching(true)
       if (hasMore && requestStatus !== 'loading') {
-        alert(hasMore)
         dispatch(fetchStaffs({ page: page + 1 }) as any)
       }
     }
@@ -60,6 +63,7 @@ export function DirectMessageList() {
         {staffs.map((staff, i) => (
           <Person key={i} {...staff} />
         ))}
+        {isFetching && <LoadingPersonSkeleton numberOfSkeletons={3} />}
       </div>
     </div>
   )
