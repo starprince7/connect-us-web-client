@@ -1,12 +1,11 @@
-import { LegacyRef, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import InfiniteScroll from 'react-infinite-scroller'
-import collaborateIllustration from '../../assets/illustrations/real_time_collaboration.svg'
 
 import HeaderChatBox from './HeaderChatBox'
 import InputChatBox from './InputChatBox'
 import RightSideTextBlockChat from './RightSideTextBox'
 import LeftSideTextBlockChat from './LeftSideTextBox'
+import collaborateIllustration from '../../assets/illustrations/real_time_collaboration.svg'
 
 import { fetchConversationForScrolling, selectChat } from '../../store/chat/reducer'
 import { selectAuth } from '../../store/auth/reducer'
