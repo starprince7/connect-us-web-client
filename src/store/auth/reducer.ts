@@ -56,8 +56,12 @@ export const logInUser = createAsyncThunk<any, LoginDto>(
   `${name}/logInUser`,
   async (logInCredential) => {
     if (!logInCredential) return toastService.showInfoMessage('Enter your login credentials')
-    const result = await apiClient.post('/users/login', logInCredential)
-    return result.data
+    try {
+      const result = await apiClient.post('/users/login', logInCredential)
+      return result.data
+    } catch (e: any) {
+      return { error: `${e.response.status}: ${e.response?.data.error}` }
+    }
   },
 )
 
@@ -127,12 +131,13 @@ const AuthSlice = createSlice({
       toastService.showErrorMessage(action.error.message!)
     })
     builder.addCase(logInUser.fulfilled, (state, action) => {
-      if (action.payload.error) {
+      if (action.payload?.error) {
+        state.requestStatus = 'failed'
         state.error = action.payload.error
         toastService.showErrorMessage(action.payload.error)
         return
       }
-      state.user = action.payload.data
+      state.user = action.payload?.data
       state.requestStatus = 'succeeded'
       state.isLoggedIn = true
       toastService.showSuccessMessage(action.payload.message)

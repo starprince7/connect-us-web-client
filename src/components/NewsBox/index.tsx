@@ -15,6 +15,7 @@ export const NewsBox = () => {
   } = useSelector(selectAuth)
   const { messages, requestStatus } = useSelector(selectNews)
   const [inComponentMessages, setInComponentMessages] = React.useState(messages)
+  const [windowHeight, setWindowHeight] = React.useState(0)
 
   const dispatch = useDispatch()
   const chatContainerRef = React.useRef<HTMLDivElement>(null)
@@ -22,6 +23,7 @@ export const NewsBox = () => {
   // fetch all news
   React.useEffect(() => {
     dispatch(getNewsAsyncAction({ page: 1 }) as any)
+    setWindowHeight(window.innerHeight - 280)
   }, [])
 
   const scrollToBottom = () => {
@@ -41,6 +43,10 @@ export const NewsBox = () => {
       <div
         ref={chatContainerRef}
         className='xl:h-[650px] lg:h-[550px] sm:h-[420px] mt-12 pt-7 pb-9 mb-28 overflow-y-scroll overflow-x-hidden space-y-3 scroll-smooth'
+        style={{
+          minHeight: `${windowHeight}px`,
+          maxHeight: `${windowHeight}px`,
+        }}
       >
         {requestStatus === 'loading' && (
           <div className='absolute top-16 pt-6 left-0 z-20 w-full'>

@@ -7,21 +7,21 @@ import chatReducer from './chat/reducer'
 import authReducer from './auth/reducer'
 import newsReducer from './news/reducer'
 import staffsReducer from './staffs/reducer'
+import appReducer from './app/reducer'
 
 export const rootReducer = combineReducers({
   Chat: chatReducer,
   Auth: authReducer,
   News: newsReducer,
   Staffs: staffsReducer,
+  App: appReducer,
 })
 const rootPersistConfig = {
   key: 'root',
   storage,
-  whitelist: ['Auth'],
-  // blacklist: ['Auth'],
+  whitelist: ['Auth', 'App'],
 }
 const persistedReducer = persistReducer(rootPersistConfig, rootReducer)
-
 const store = configureStore({ reducer: persistedReducer })
 
 export const persistor = persistStore(store)

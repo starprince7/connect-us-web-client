@@ -14,6 +14,9 @@ const LoginForm = () => {
   const [error, setError] = useState('')
 
   useEffect(() => {
+    //reset form field
+    setEmail('')
+    setPassword('')
     if (isLoggedIn) navigate('/teams')
   }, [isLoggedIn])
 
@@ -26,10 +29,6 @@ const LoginForm = () => {
     }
 
     dispatch(logInUser(loginData) as any)
-
-    //reset form field
-    setEmail('')
-    setPassword('')
   }
   return (
     <div className='w-full md: max-w-[550px] flex mt-20 min-h-screen  flex-col m-auto px-5'>
@@ -57,7 +56,7 @@ const LoginForm = () => {
         />
         <button
           type='submit'
-          disabled={requestStatus === 'loading'}
+          disabled={false}
           className='bg-black w-full flex justify-center text-white font-semibold rounded p-2 my-6'
         >
           {requestStatus === 'loading' ? 'Authenticating...' : 'Sign In'}
