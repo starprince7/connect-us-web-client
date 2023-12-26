@@ -8,7 +8,7 @@ import { logInUser, selectAuth } from '../../store/auth/reducer'
 const LoginForm = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { isLoggedIn } = useSelector(selectAuth)
+  const { isLoggedIn, requestStatus } = useSelector(selectAuth)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -57,9 +57,10 @@ const LoginForm = () => {
         />
         <button
           type='submit'
+          disabled={requestStatus === 'loading'}
           className='bg-black w-full flex justify-center text-white font-semibold rounded p-2 my-6'
         >
-          Sign In
+          {requestStatus === 'loading' ? 'Authenticating...' : 'Sign In'}
         </button>
       </form>
     </div>
