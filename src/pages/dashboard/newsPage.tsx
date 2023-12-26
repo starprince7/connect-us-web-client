@@ -13,7 +13,7 @@ export const NewsPage = () => {
 
   return (
     <div className='space-y-12'>
-      <h2 className='text-4xl font-bold'>News</h2>
+      <h2 className='text-2xl sm:text-4xl font-bold'>News</h2>
       <div className='relative sm:flex items-start sm:space-x-2 h-screen'>
         {/* it renders a news box component */}
         <NewsContext.Provider value={{ setShowUserNewsRoomInfo }}>

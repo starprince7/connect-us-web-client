@@ -16,6 +16,7 @@ export default function InputChatBox() {
 
   const handleChatMessageSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if (!chatMessage) return toastService.showInfoMessage('Cannot send empty content')
     try {
       setIsPostingMessage(true)
       const { data } = await apiClient.post(`/chat/${_id}`, { content: chatMessage })

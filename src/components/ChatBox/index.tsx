@@ -1,12 +1,11 @@
-import { LegacyRef, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import InfiniteScroll from 'react-infinite-scroller'
-import collaborateIllustration from '../../assets/illustrations/real_time_collaboration.svg'
 
 import HeaderChatBox from './HeaderChatBox'
 import InputChatBox from './InputChatBox'
 import RightSideTextBlockChat from './RightSideTextBox'
 import LeftSideTextBlockChat from './LeftSideTextBox'
+import collaborateIllustration from '../../assets/illustrations/real_time_collaboration.svg'
 
 import { fetchConversationForScrolling, selectChat } from '../../store/chat/reducer'
 import { selectAuth } from '../../store/auth/reducer'
@@ -27,6 +26,7 @@ export const ChatBox = () => {
   const dispatch = useDispatch()
 
   const [showLoadMore, setShowLoadMore] = useState(false)
+  const [windowHeight, setWindowHeight] = useState(0)
 
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
@@ -36,6 +36,7 @@ export const ChatBox = () => {
 
   useEffect(() => {
     scrollToBottom()
+    setWindowHeight(window.innerHeight - 150)
   }, [activeChatConversation])
 
   const handleScroll = () => {
@@ -43,7 +44,6 @@ export const ChatBox = () => {
       // Check if the scroll bar is at the top
       const isAtTop = chatContainerRef.current.scrollTop === 0
 
-      // Do something based on whether it's at the top or not
       if (isAtTop && hasMore) {
         setShowLoadMore(true)
       }
@@ -75,6 +75,10 @@ export const ChatBox = () => {
           ref={chatContainerRef}
           onScroll={handleScroll}
           className='lg:h-[650px] sm:h-[520px] mt-6 py-10 overflow-y-scroll overflow-x-hidden space-y-3 scroll-smooth'
+          style={{
+            minHeight: `${windowHeight}px`,
+            maxHeight: `${windowHeight}px`,
+          }}
         >
           {false && (
             <button

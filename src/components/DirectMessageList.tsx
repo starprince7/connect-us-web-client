@@ -1,22 +1,23 @@
 import React, { useEffect } from 'react'
-import InfiniteScroll from 'react-infinite-scroller'
+import { useDispatch, useSelector } from 'react-redux'
+
+import useLocalStorage from '../hooks/useLocalStorage'
+import { LoadingPersonSkeleton } from './skeleton/PersonLoader'
+
+import { fetchStaffs, selectStaffs } from '../store/staffs/reducer'
+import { openChat, setActiveConversation, setChatRecipientInformation } from '../store/chat/reducer'
+import apiClient from '../config/api-client'
+
+import { IStaff } from '../types/staff'
+import { IMessage } from '../types/message'
 
 import AvatarChatMan from '../assets/icons/chat-man-avatar.svg'
 import AvatarChatWoman from '../assets/icons/chat-woman-avatar.svg'
-import { useDispatch, useSelector } from 'react-redux'
-import { openChat, setActiveConversation, setChatRecipientInformation } from '../store/chat/reducer'
-import { fetchStaffs, selectStaffs } from '../store/staffs/reducer'
-import apiClient from '../config/api-client'
-import { IStaff } from '../types/staff'
-import { IMessage } from '../types/message'
-import { LoadingPersonSkeleton } from './skeleton/PersonLoader'
-import useLocalStorage from '../hooks/useLocalStorage'
 
 // It renders a list of persons.
 export function DirectMessageList() {
   const dispatch = useDispatch()
   const { staffs, page, requestStatus, hasMore } = useSelector(selectStaffs)
-
   const [isFetching, setIsFetching] = React.useState(false)
 
   const loadStaffs = () => {
@@ -37,8 +38,8 @@ export function DirectMessageList() {
 
     if (isScrolledToBottom) {
       // User has scrolled to the bottom, load more data
-      setIsFetching(true)
       if (hasMore && requestStatus !== 'loading') {
+        setIsFetching(true)
         dispatch(fetchStaffs({ page: page + 1 }) as any)
       }
     }
@@ -47,7 +48,6 @@ export function DirectMessageList() {
   useEffect(() => {
     const container = document.getElementById('scroll-container')
     if (!container) return
-
     container.addEventListener('scroll', handleScroll)
 
     return () => {
@@ -56,9 +56,12 @@ export function DirectMessageList() {
   }, [])
 
   return (
-    <div className='space-y-4 mt-5 max-w-fit sm:h-[85%] min-w-fit overflow-hidden'>
+    <div className='space-y-4 mt-5 max-w-fit h-[87%] sm:h-[85%] min-w-fit overflow-hidden'>
       <h2 className='text-sm font-semibold mb-10'>Direct Messages</h2>
-      <div id='scroll-container' className='min-w-fit overflow-y-scroll sm:h-[82%] space-y-3 py-1'>
+      <div
+        id='scroll-container'
+        className='min-w-fit overflow-y-scroll h-[92%] sm:h-[82%] pb-5 space-y-3 py-1'
+      >
         {requestStatus === 'loading' || (!staffs.length && <LoadingPersonSkeleton />)}
         {staffs.map((staff, i) => (
           <Person key={i} {...staff} />
@@ -69,8 +72,8 @@ export function DirectMessageList() {
   )
 }
 
-// Direct Message Persons
-// it fetches message conversation history with just this person
+// it displays a person
+// and it fetches chat conversation between any user logged in
 function Person({ _id, fullname, leave, gender, email }: IStaff) {
   const dispatch = useDispatch()
   const [loading, setLoading] = React.useState(false)
