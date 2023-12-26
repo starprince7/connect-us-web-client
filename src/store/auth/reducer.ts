@@ -137,8 +137,6 @@ const AuthSlice = createSlice({
       state.isLoggedIn = true
       toastService.showSuccessMessage(action.payload.message)
       StorageService.setAuthToken(action.payload.token)
-      alert('About to call redirect function.')
-      redirect('/teams')
     })
     // *** Generate Sign up link
     builder.addCase(generateSignUpLink.pending, (state) => {
